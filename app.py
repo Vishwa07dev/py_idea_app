@@ -75,6 +75,35 @@ def get_idea_id(idea_id):
         return "Some internal error happened",500
 
 
+'''
+Endpoint for updating the idea
+'''
+@app.put("/ideaapp/api/v1/ideas/<idea_id>")
+def update_idea(idea_id):
+    try:
+        if int(idea_id) in ideas :
+            ideas[int(idea_id)] = request.get_json()
+            return ideas[int(idea_id)],200
+        else :
+            return "Idea id passed is not present",400
+    
+    except :
+        return "Some internal error happened",500
+
+'''
+End point to delete an idea
+'''
+@app.delete("/ideaapp/api/v1/ideas/<idea_id>")
+def delete_idea(idea_id):
+    try:
+        if int(idea_id) in ideas :
+            ideas.pop(int(idea_id))
+            return "Idea got successfully removed"
+        else :
+            return "Idea id passed is not present",400
+    
+    except :
+        return "Some internal error happened",500
 
 if __name__ == '__main__':
     app.run(port=8080)
